@@ -10,7 +10,7 @@ public class Member {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "USERNAME")
     private String name;
 
     @OneToMany(mappedBy = "member")
