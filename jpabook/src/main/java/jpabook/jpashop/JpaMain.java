@@ -1,6 +1,8 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Movie;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,22 +19,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Movie movie = new Movie();
-            movie.setDirector("aaaa");
-            movie.setActor("bbb");
-            movie.setName("ccc");
-            movie.setPrice(10000);
-            em.persist(movie);
+            Member member = new Member();
+            member.setName("hello");
 
+            System.out.println("========");
+            em.persist(member);
             em.flush();
             em.clear();
 
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println("findMovie.getName() = " + findMovie.getName());
+            System.out.println("========");
+            Member findMember =  em.getReference(Member.class, member.getId());
+            System.out.println("findMember.getClass() = " + findMember.getClass());
+            System.out.println("findMember.getId() = " + findMember.getId());
+
+            Hibernate.initialize(findMember);
 
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            System.out.println(e.getMessage());
         } finally {
             em.close();
         }
