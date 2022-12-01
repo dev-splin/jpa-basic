@@ -5,17 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Item {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "TYPE")
+public abstract class Item extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
 
-//    @OneToMany(mappedBy = "item")
-//    private List<OrderItem> orderItems = new ArrayList<>();
-
     private String name;
     private int price;
     private int stockQuantity;
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
 
     public Long getId() {
         return id;
@@ -39,13 +46,5 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
     }
 }
