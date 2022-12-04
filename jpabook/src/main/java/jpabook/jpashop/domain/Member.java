@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member {
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
@@ -16,9 +16,11 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     List<Order> orders = new ArrayList<>();
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Period workPeriod;
+
+    @Embedded
+    private Adress adress;
 
     public Long getId() {
         return id;
@@ -44,27 +46,19 @@ public class Member extends BaseEntity {
         this.orders = orders;
     }
 
-    public String getCity() {
-        return city;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
 
-    public String getStreet() {
-        return street;
+    public Adress getAdress() {
+        return adress;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 }
