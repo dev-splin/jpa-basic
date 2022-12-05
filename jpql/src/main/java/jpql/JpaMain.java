@@ -13,29 +13,36 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("1Team");
-            em.persist(team);
+            Team teamA = new Team();
+            teamA.setName("팀A");
+            em.persist(teamA);
+
+            Team teamB = new Team();
+            teamB.setName("팀B");
+            em.persist(teamB);
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setAge(10);
-            member.changeTeam(team);
-            member.setMemberType(MemberType.ADMIN);
+            member.changeTeam(teamA);
             em.persist(member);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.changeTeam(teamA);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("member3");
+            member3.changeTeam(teamB);
+            em.persist(member3);
 
             em.flush();
             em.clear();
 
-            String query = "select m.username, 'HELLO', true from Member m where m.memberType = jpql.MemberType.USER";
-            List<Object[]> resultList = em.createQuery(query)
-                    .getResultList();
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
 
-            for (Object[] object : resultList) {
-                for (Object o : object) {
-                    System.out.println("o = " + o);
-                }
-            }
+            System.out.println("resultCount = " + resultCount);
 
             tx.commit();
         } catch (Exception e) {
