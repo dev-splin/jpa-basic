@@ -3,6 +3,7 @@ package jpql;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ORDERS")
 public class Order {
     @Id @GeneratedValue
     private Long id;
@@ -13,7 +14,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
-    private Order order;
+    private Product product;
 
     public Long getId() {
         return id;
